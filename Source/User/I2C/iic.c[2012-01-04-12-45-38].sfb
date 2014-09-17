@@ -1,0 +1,462 @@
+#include "iic.h"
+#include "24LC02.h"
+#include "usually.h"
+
+//STM32軟件模擬IIC
+u8 Data[24];
+
+extern void Delay_Ms(uint16_t time);  //延時函數
+extern void Delay_Us(uint16_t time);  //延時函數
+
+extern u8 I2C_Address;
+
+
+void CP_IIC_delay(void)
+{         
+
+#if 0  
+//  u16 i=450; //G2
+  uint8_t i=220;	//210	//這裡可以優化速度        ，經測試最低到150還能寫入
+  while(i)  
+   {  
+	__nop();
+	i--;
+   }  
+
+#endif
+	Delay_Us(15);  //smallest 11
+	
+}
+///<-----Port
+//產生IIC起始信號
+void CP_IIC_Start(void)
+{
+	SDA_OUT();     //sda線輸出
+	IIC_SDA=1;	  	  
+	IIC_SCL=1;
+	CP_IIC_delay();//delay_us(4);
+ 	IIC_SDA=0;//START:when CLK is high,DATA change form high to low 
+	CP_IIC_delay();//delay_us(4);
+	IIC_SCL=0;//鉗住I2C總線，準備發送或接收數據 
+}	  
+//產生IIC停止信號
+void CP_IIC_Stop(void)
+{
+	SDA_OUT();//sda線輸出
+	IIC_SCL=0;
+	IIC_SDA=0;//STOP:when CLK is high DATA change form low to high
+ 	CP_IIC_delay();//delay_us(4);
+	IIC_SCL=1; 
+	IIC_SDA=1;//發送I2C總線結束信號
+	CP_IIC_delay();//delay_us(4);							   	
+}
+//等待應答信號到來
+//返回值：FALSE，接收應答失敗
+//        TRUE，接收應答成功
+bool CP_IIC_Wait_Ack(void)
+{
+	u8 ucErrTime=0;
+	SDA_IN();      //SDA設置為輸入  
+	IIC_SDA=1;CP_IIC_delay();//Delay_Us(1);	   
+	IIC_SCL=1;CP_IIC_delay();//Delay_Us(1);	 
+	while(READ_SDA)
+//	if(READ_SDA)
+	{
+		ucErrTime++;
+		if(ucErrTime>250)
+		{
+			IIC_SCL=0;//時鐘輸出0 	   
+			IIC_Stop();
+			return FALSE;
+		}
+	}
+	IIC_SCL=0;//時鐘輸出0 	   
+	return TRUE;  
+} 
+//產生ACK應答
+void CP_IIC_Ack(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=0;
+	CP_IIC_delay();//delay_us(2);
+	IIC_SCL=1;
+	CP_IIC_delay();//delay_us(2);
+	IIC_SCL=0;
+}
+//不產生ACK應答		    
+void CP_IIC_NAck(void)
+{
+	IIC_SCL=0;
+	SDA_OUT();
+	IIC_SDA=1;
+	CP_IIC_delay();//delay_us(2);
+	IIC_SCL=1;
+	CP_IIC_delay();//delay_us(2);
+	IIC_SCL=0;
+}					 				     
+//IIC發送一個字節
+//返回從機有無應答
+//1，有應答
+//0，無應答			  
+void CP_IIC_Send_Byte(u8 txd)
+{                        
+    u8 t;   
+	SDA_OUT(); 	    
+    IIC_SCL=0;//拉低時鐘開始數據傳輸
+    for(t=0;t<8;t++)
+    {              
+        //IIC_SDA=(txd&0x80)>>7;
+		if ((txd&0x80)>>7) 	IIC_SDA=1;
+		else 				IIC_SDA=0;
+        txd<<=1; 	  
+		CP_IIC_delay();//delay_us(2);   //對TEA5767這三個延時都是必須的
+		IIC_SCL=1;
+		CP_IIC_delay();//delay_us(2); 
+		IIC_SCL=0;	
+//		IIC_delay();//delay_us(2);
+    }	 
+} 	    
+//-------->Port
+//讀1個字節，ack=1時，發送ACK，ack=0，發送nACK   
+uint8_t CP_IIC_Read_Byte(void)
+{
+	unsigned char i,receive=0;
+	SDA_IN();//SDA設置為輸入
+    for(i=0;i<8;i++ )
+	{
+        IIC_SCL=0; 
+        CP_IIC_delay();//delay_us(2);
+		IIC_SCL=1;
+        receive<<=1;
+        if(READ_SDA)receive++;   
+		CP_IIC_delay();//delay_us(1); 
+    }					 
+    return receive;
+}
+
+uint8_t I2C_RMI_BufferRead(unsigned char RMI_Device_Addr,unsigned char Regaddr)
+{
+	unsigned char Regvalue;
+	unsigned char RMI_Write_DeviceAddress,RMI_Read_DeviceAddress;
+	uint8_t NumByteToRead=1;
+
+	RMI_Write_DeviceAddress = (RMI_Device_Addr << 1) | I2C_WRITE;
+	RMI_Read_DeviceAddress = (RMI_Device_Addr << 1) | I2C_READ;
+
+	CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);
+
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Send_Byte(Regaddr);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Start();
+    CP_IIC_Send_Byte(RMI_Read_DeviceAddress);
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+	
+    while(NumByteToRead)
+    {
+      Regvalue = CP_IIC_Read_Byte();
+      if(NumByteToRead == 1)	CP_IIC_NAck();
+      else 	CP_IIC_Ack();  
+      NumByteToRead--;
+    }
+    CP_IIC_Stop();
+    return Regvalue;
+} 
+
+bool I2C_RMI_BufferWrite(unsigned char RMI_Device_Addr,unsigned char REG_ADDR,unsigned char REG_VAL)
+{
+	unsigned char RMI_Write_DeviceAddress;
+	u8 NumByteToWrite=1;
+
+	RMI_Write_DeviceAddress = (RMI_Device_Addr << 1) | I2C_WRITE;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);//設置器件地址+段地址  
+    if (!CP_IIC_Wait_Ack())
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+    CP_IIC_Send_Byte(REG_ADDR);   //設置段內地址      
+    if (!CP_IIC_Wait_Ack())
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }         
+           
+        while(NumByteToWrite--)
+        {
+          CP_IIC_Send_Byte(REG_VAL);
+    	  if (!CP_IIC_Wait_Ack())
+        	{
+                CP_IIC_Stop();  
+                return FALSE;
+        	} 
+        }
+        CP_IIC_Stop();
+          //注意：因為這裡要等待EEPROM寫完，可以採用查詢或延時方式(10ms)
+          //Systick_Delay_1ms(10);
+
+        return TRUE;
+}
+
+u8 I2C_RMI_BufferRead_cont(unsigned char RMI_Device_Addr,unsigned char Regaddr,u8 NumByteToRead)
+{
+	unsigned char Regvalue;
+	unsigned char RMI_Write_DeviceAddress,RMI_Read_DeviceAddress;
+
+	RMI_Write_DeviceAddress = (RMI_Device_Addr << 1) | I2C_WRITE;
+	RMI_Read_DeviceAddress = (RMI_Device_Addr << 1) | I2C_READ;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);
+
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Send_Byte(Regaddr);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Send_Byte(0x00);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Start();
+    CP_IIC_Send_Byte(RMI_Read_DeviceAddress);
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+	
+    while(NumByteToRead)
+    {
+      Regvalue = CP_IIC_Read_Byte();
+      if(NumByteToRead == 1) CP_IIC_NAck();
+      else CP_IIC_Ack();  
+      NumByteToRead--;
+    }
+    CP_IIC_Stop();
+    return Regvalue;
+}
+
+uint8_t CP_RMI_Read(u8 Regaddr)
+{
+	unsigned char Regvalue;
+	unsigned char RMI_Write_DeviceAddress,RMI_Read_DeviceAddress;
+
+	RMI_Write_DeviceAddress = (I2C_Address << 1) | I2C_WRITE;
+	RMI_Read_DeviceAddress = (I2C_Address << 1) | I2C_READ;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);
+
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Send_Byte(Regaddr);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+    CP_IIC_Start();
+    CP_IIC_Send_Byte(RMI_Read_DeviceAddress);
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+	
+      Regvalue = CP_IIC_Read_Byte();   CP_IIC_NAck();
+
+    CP_IIC_Stop();
+    return Regvalue;
+}
+
+bool CP_RMI_Write(u8 Regaddr,unsigned char REG_VAL)
+{
+	unsigned char RMI_Write_DeviceAddress;//,RMI_Read_DeviceAddress;
+	u8 NumByteToWrite=1;
+
+	RMI_Write_DeviceAddress = (I2C_Address << 1) | I2C_WRITE;
+//	RMI_Read_DeviceAddress = (I2C_Address << 1) | I2C_READ;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);//設置器件地址+段地址  
+    if (!CP_IIC_Wait_Ack())
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+    CP_IIC_Send_Byte(Regaddr);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+                return FALSE;
+        }
+
+        while(NumByteToWrite--)
+        {
+          CP_IIC_Send_Byte(REG_VAL);
+    	  if (!CP_IIC_Wait_Ack())
+        	{
+                CP_IIC_Stop();  
+                return FALSE;
+        	} 
+        }
+        CP_IIC_Stop();
+          //注意：因為這裡要等待EEPROM寫完，可以採用查詢或延時方式(10ms)
+          //Systick_Delay_1ms(10);
+
+        return TRUE;
+}
+// User-supplied functions required to run this code sample:
+//
+// S32 readRMI(U16 addr, U08 *data, U16 num)
+//      This function is used to read from the RMI registers of an attached Synaptics device.
+//      The first parameter, addr, is the RMI address to read from.
+//      The second parameter, data, is a pointer to the location of where to store the bytes read.
+//      The final parameter is the number of consecutive bytes (RMI registers) to read.
+//      The return value is the number of bytes successfully read.
+//      If a read error occurs during the transfer, the function immediately returns with a value < 0.
+//      Note! Return parameter is ignored in this sample code.
+void readRMI(u8 reg_addr, u8 *data, u16 num)
+{
+//	u16 i;
+	u8 tmp=0;
+	unsigned char RMI_Write_DeviceAddress,RMI_Read_DeviceAddress;
+
+	RMI_Write_DeviceAddress = (I2C_Address << 1) | I2C_WRITE;
+	RMI_Read_DeviceAddress = (I2C_Address << 1) | I2C_READ;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);
+
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+//                return FALSE;
+        }
+
+    CP_IIC_Send_Byte(reg_addr);      
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+//                return FALSE;
+        }
+
+
+    CP_IIC_Start();
+    CP_IIC_Send_Byte(RMI_Read_DeviceAddress);
+    if (!CP_IIC_Wait_Ack())  
+        {
+                CP_IIC_Stop();  
+//                return FALSE;
+        }
+	
+    while(num)
+    {
+      tmp = CP_IIC_Read_Byte();
+			*data = tmp;
+			data++;      
+      if(num == 1) CP_IIC_NAck();
+      else CP_IIC_Ack();  
+      num--;
+    }
+    CP_IIC_Stop();
+
+//	return sizeof(data)/sizeof(char);
+
+}
+
+//
+// S32 writeRMI(U16 addr, U08 *data, U16 num)
+//      This function is used to write to the RMI registers of an attached Synaptics device.
+//      The first parameter, addr, is the RMI address to write to.
+//      The second parameter, data, is a pointer to the location of the data to write.
+//      The final parameter is the number of consecutive bytes (RMI registers) to write.
+//      The return value is the number of bytes successfully written.
+//      If a write error occurs during the transfer, the function immediately returns with a value < 0.
+//      Note! Return parameter is ignored in this sample code.
+int writeRMI(u8 reg_addr, u8 *data, u16 num)
+{
+	unsigned char RMI_Write_DeviceAddress;
+
+	RMI_Write_DeviceAddress = (I2C_Address << 1) | I2C_WRITE;
+
+    CP_IIC_Start();
+
+    CP_IIC_Send_Byte(RMI_Write_DeviceAddress);//設置器件地址+段地址  
+    if (!CP_IIC_Wait_Ack())
+        {
+                CP_IIC_Stop();  
+                return -1;
+        }
+    CP_IIC_Send_Byte(reg_addr);   //設置段內地址      
+    if (!CP_IIC_Wait_Ack())
+        {
+                CP_IIC_Stop();  
+                return -1;
+        }         
+           
+        while(num--)
+        {
+          CP_IIC_Send_Byte(*data);
+          data++;
+          
+    	  if (!CP_IIC_Wait_Ack())
+        	{
+                CP_IIC_Stop();  
+                return -1;
+        	} 
+        }
+        CP_IIC_Stop();
+          //注意：因為這裡要等待EEPROM寫完，可以採用查詢或延時方式(10ms)
+          //Systick_Delay_1ms(10);
+
+        return 1;
+
+}
+
+
+
+
+
+

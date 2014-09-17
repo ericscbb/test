@@ -1,0 +1,646 @@
+/*
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Copyright (c) 2011 Synaptics, Inc.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of
+   this software and associated documentation files (the "Software"), to deal in
+   the Software without restriction, including without limitation the rights to use,
+   copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+   Software, and to permit persons to whom the Software is furnished to do so,
+   subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+// SynaFirmwareImage.h contains the data for both the entire image and the config block
+#include "rmi.h"
+#include "math.h"
+#include "usually.h"
+#include "LCD_Drive.h"
+#include "SynaFirmwareImage.h"
+
+/* Variables for F34 functionality */
+/*
+unsigned short SynaF34DataBase;
+unsigned short SynaF34QueryBase;
+unsigned short SynaF01DataBase;
+unsigned short SynaF01CommandBase;
+
+unsigned short SynaF34Reflash_BlockNum;
+unsigned short SynaF34Reflash_BlockData;
+unsigned short SynaF34ReflashQuery_BootID;
+unsigned short SynaF34ReflashQuery_FlashPropertyQuery;
+unsigned short SynaF34ReflashQuery_FirmwareBlockSize;
+unsigned short SynaF34ReflashQuery_FirmwareBlockCount;
+unsigned short SynaF34ReflashQuery_ConfigBlockSize;
+unsigned short SynaF34ReflashQuery_ConfigBlockCount;
+
+
+unsigned short SynaF34_FlashControl;
+
+
+unsigned char *SynaconfigImgData;
+unsigned char *SynalockImgData;
+unsigned int SynafirmwareImgVersion;
+
+
+*/
+
+unsigned short SynaBootloadID;
+unsigned short SynaFirmwareBlockSize;
+unsigned short SynaFirmwareBlockCount;
+unsigned short SynaConfigBlockSize;
+unsigned short SynaConfigBlockCount;
+unsigned long SynaConfigImageSize;
+unsigned long SynaImageSize;
+
+unsigned char *SynaconfigImgData;
+unsigned char *SynafirmwareImgData;
+
+unsigned char *SynaconfigImgData;
+unsigned char *SynalockImgData;
+unsigned int SynafirmwareImgVersion;
+
+extern unsigned char ConfigBlock[];
+
+#define SynaF34_FlashControl  F34_FLASH_DATA03
+
+#define SynaF34Reflash_BlockNum F34_FLASH_DATA00
+#define SynaF34Reflash_BlockData F34_FLASH_DATA02_15
+
+#define FW_REVISION               "s3202_ver5"   	/*  F01 Firmware ProductID  */
+
+/* End: Variables for F34 functionality */
+
+/* SynaReadBootloadID reads the F34 query registers and retrieves the bootloader ID of the firmware
+ */
+void SynaReadBootloadID(void)
+{
+  unsigned char uData[2];
+
+  readRMI(F34_FLASH_QUERY0, &uData[0], 2);
+  SynaBootloadID = uData[0] + uData[1] * 0x100;
+  printf("F34: SynaReadBootloadID()  => Bootloader ID:%s\r\n",uData);
+}
+
+/* SynaWriteBootloadID writes the bootloader ID to the F34 data register to unlock the reflash process
+ */
+void SynaWriteBootloadID(void)
+{
+  unsigned char uData[2];
+
+  uData[0] = SynaBootloadID % 0x100;
+  uData[1] = SynaBootloadID / 0x100;
+  printf("F34: SynaWriteBootloadID()  =>uData[0]:0x%x, uData[1]:0x%x.\r\n",uData[0] ,uData[1] );
+
+  writeRMI(F34_FLASH_DATA02_15, &uData[0], 2);
+}
+
+/* SynaReadFirmwareInfo reads the F34 query registers and retrieves the block size and count
+ * of the firmware section of the image to be reflashed
+ */
+void SynaReadFirmwareInfo(void)
+{
+  unsigned char uData[2];
+
+  printf("Read Firmware Info...\r\n");
+
+  readRMI(F34_FLASH_QUERY3, &uData[0], 2);
+  SynaFirmwareBlockSize = uData[0] | (uData[1] << 8);
+  printf("F34: SynaFirmwareBlockSize:%d \r\n",SynaFirmwareBlockSize);
+
+
+  readRMI(F34_FLASH_QUERY5, &uData[0], 2);
+  SynaFirmwareBlockCount = uData[0] | (uData[1] << 8);
+  SynaImageSize = SynaFirmwareBlockCount * SynaFirmwareBlockSize;
+  printf("F34: SynaFirmwareBlockCount:%d , SynaImageSize:%d\r\n",SynaFirmwareBlockCount,SynaImageSize);
+
+}
+
+/* SynaReadConfigInfo reads the F34 query registers and retrieves the block size and count
+ * of the configuration section of the image to be reflashed
+ */
+void SynaReadConfigInfo(void)
+{
+  unsigned char uData[2];
+
+  printf("F34:Read Config Info...\r\n");
+
+  readRMI(F34_FLASH_QUERY3, &uData[0], 2);
+  SynaConfigBlockSize = uData[0] | (uData[1] << 8);
+  printf("F34: SynaConfigBlockSize:%d \r\n",SynaConfigBlockSize);
+
+  readRMI(F34_FLASH_QUERY7, &uData[0], 2);
+  SynaConfigBlockCount = uData[0] | (uData[1] << 8);
+  SynaConfigImageSize = SynaConfigBlockCount * SynaConfigBlockSize;
+  printf("F34: SynaConfigBlockCount:%d , SynaConfigImageSize:%d\r\n",SynaConfigBlockCount,SynaConfigImageSize);
+
+}
+
+/* SynaWaitForATTN waits for ATTN to be asserted within a certain time threshold.
+ */
+void SynaWaitForATTN(void)
+{
+
+//  printf("Func34: SynaWaitForATTN, delay 10ms...\r\n");
+  Delay_Ms(10);
+}
+
+/* SynaWaitATTN waits for ATTN to be asserted within a certain time threshold.
+ * The function also checks for the F34 "Program Enabled" bit and clear ATTN accordingly.
+ */
+void SynaWaitATTN(void)
+{
+  unsigned char uData;
+  unsigned char uStatus;
+
+//	waitATTN(ASSERT, 300);
+//  printf("Func34: SynaWaitATTN() 10ms delay then read status...\r\n");
+  Delay_Ms(5);
+
+  do
+  {
+    readRMI(F34_FLASH_DATA03, &uData, 1);
+    readRMI(F01_RMI_Data1, &uStatus, 1);
+  }
+  while (uData!= 0x80);
+}
+
+
+
+/* SynaEnableFlashing kicks off the reflash process
+ */
+void SynaEnableFlashing(void)
+{
+  unsigned char uData,uData2;
+  unsigned char uStatus,uStatus2;
+  u8 BL_I2C_Addr = 0x20;
+
+  printf("Func34: SynaEnableFlashing() enabling Reflash...\r\n");
+  I2C_Int_Set(0);
+
+
+  // Reflash is enabled by first reading the bootloader ID from the firmware and write it back
+  SynaReadBootloadID();
+  SynaWriteBootloadID();
+
+  // Make sure Reflash is not already enabled
+  do
+  {
+    readRMI(F34_FLASH_DATA03, &uData, 1);
+  }
+  while (((uData & 0x0f) != 0x00));
+
+  // Clear ATTN
+  readRMI (F01_RMI_Data1, &uStatus, 1);
+  printf("Func34: SynaEnableFlashing() - uStatus:0x%x.\r\n",uStatus);
+
+  if ((uStatus &0x40) == 0)
+  {
+    // Write the "Enable Flash Programming command to F34 Control register
+    // Wait for ATTN and then clear the ATTN.
+    printf("Func34: SynaEnableFlashing() Flash Command $0F: Enable Flash Programming..\r\n");
+    uData = 0x0f;
+    writeRMI(F34_FLASH_DATA03, &uData, 1);
+
+//    SynaWaitForATTN();
+    Delay_Ms(10);
+    printf("Func34: SynaEnableFlashing() delay 10ms then continuous. ...\r\n");
+
+//    read_all_reg();
+//    readRMI(F01_RMI_Data1, &uStatus, 1);
+//     readRMI(F01_RMI_Data1, &uStatus2, 1);
+    uStatus2  = CP_BL_Read(BL_I2C_Addr,F01_RMI_Data1);
+    printf("Func34: SynaEnableFlashing() - F01_RMI_Data1:0x%x,uStatus2:0x%x.\r\n",F01_RMI_Data1,uStatus2);
+
+
+    // Read the "Program Enabled" bit of the F34 Control register, and proceed only if the
+    // bit is set.
+//   readRMI(F34_FLASH_DATA03, &uData2, 1);
+    uData2  = CP_BL_Read(BL_I2C_Addr,F34_FLASH_DATA03);
+    printf("Func34: SynaEnableFlashing() - F34_FLASH_DATA03:0x%x, uData2:0x%x.\r\n",F34_FLASH_DATA03,uData2);
+
+    while (uData2 != 0x80)
+    {
+      // In practice, if uData!=0x80 happens for multiple counts, it indicates reflash
+      // is failed to be enabled, and program should quit
+      //    readRMI(F34_FLASH_DATA03, &uData2, 1);
+      uData2  = CP_BL_Read(BL_I2C_Addr,F34_FLASH_DATA03);
+      printf("Func34: SynaEnableFlashing() - F34_FLASH_DATA03:0x%x, uData2:0x%x.\r\n",F34_FLASH_DATA03,uData2);
+
+    }
+
+
+  }
+}
+
+
+/* SynaFinalizeReflash finalizes the reflash process
+ */
+void SynaFinalizeReflash(void)
+{
+  unsigned char uData;
+  unsigned char uStatus;
+  extern u8 F01_RMI_Cmd0;
+
+  printf("Func34: Finalizing Reflash...\r\n");
+
+  // Issue the "Reset" command to F01 command register to reset the chip
+  // This command will also test the new firmware image and check if its is valid
+  uData = 1;
+  writeRMI(F01_RMI_Cmd0, &uData, 1);
+
+// RMI_Reset();
+  Clean_RMI_Reset();
+
+//	SynaWaitForATTN();
+  readRMI(F01_RMI_Data0, &uData, 1);
+
+  // Sanity check that the reflash process is still enabled
+  do
+  {
+    readRMI(SynaF34_FlashControl, &uStatus, 1);
+    printf("Func34: F34_FLASH_DATA03:0x%x,uStatus:0x%x ...\r\n",SynaF34_FlashControl,uStatus);
+  }
+  while ((uStatus & 0x0f) != 0x00);
+
+  readRMI(F01_RMI_Data1, &uStatus, 1);
+
+  uData = 0;
+
+  // Check if the "Flash Prog" bit in F01 data register is cleared
+  // Reflash is completed, and the image passes testing when the bit is cleared
+  do
+  {
+    readRMI(F01_RMI_Data0, &uData, 1);
+    printf("Func34: F01_RMI_Data0:0x%x,uData:0x%x ...\r\n",F01_RMI_Data0,uData);
+  }
+  while ((uData & 0x80) == 0);
+
+  printf("Func34: Reflash Completed. System reset.\r\n");
+  NVIC_SystemReset();
+//  PDT_scan();
+
+//  printf("Func34: Reflash Completed. Please reboot.\r\n");
+//  I2C_Int_Set(1);
+
+}
+
+
+/* SynaInitialize sets up the reflahs process
+ */
+void SynaInitialize(void)
+{
+  unsigned char uData[2];
+  unsigned char uStatus;
+  extern u8 I2C_Address;
+
+  printf("Func34: Initializing Reflash Process...\r\n");
+
+//default page
+  printf("Register Data of Page 0.\r\n");
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,0);
+
+  SynafirmwareImgData = (unsigned char *)((&SynaFirmware[0])+0x100);
+  SynaconfigImgData   = (unsigned char *)(SynafirmwareImgData+SynaImageSize);
+  SynafirmwareImgVersion = (unsigned int)(SynaFirmware[7]);
+
+  switch (SynafirmwareImgVersion)
+  {
+    case 2:
+      SynalockImgData = (unsigned char *)((&SynaFirmware[0]) + 0xD0);
+      break;
+    case 3:
+    case 4:
+      SynalockImgData = (unsigned char *)((&SynaFirmware[0]) + 0xC0);
+      break;
+    case 5:
+      SynalockImgData = (unsigned char *)((&SynaFirmware[0]) + 0xB0);
+    default:
+      break;
+  }
+
+}
+
+
+/* eraseConfigBlock erases the config block
+*/
+void eraseConfigBlock(void)
+{
+  unsigned char uData;
+
+  printf("Func34: eraseConfigBlock()...\r\n");
+  // Erase of config block is done by first entering into bootloader mode
+  SynaReadBootloadID();
+  SynaWriteBootloadID();
+
+  // Command 7 to erase config block
+  uData = 7;
+  writeRMI(SynaF34_FlashControl, &uData, 1);
+
+  SynaWaitATTN();
+}
+
+
+/* SynaProgramConfiguration writes the configuration section of the image block by block
+ */
+void SynaProgramConfiguration(void)
+{
+  unsigned char uData[2];
+  unsigned char *puData = ConfigBlockData;
+  unsigned short blockNum;
+
+  printf("Func34: Program Configuration Section...\r\n");
+
+  printf("Func34: SynaProgramConfiguration() -> SynaConfigBlockCount:%d.\r\n",SynaConfigBlockCount);
+  for (blockNum = 0; blockNum < SynaConfigBlockCount; blockNum++)
+  {
+    uData[0] = blockNum & 0xff;
+    uData[1] = (blockNum & 0xff00) >> 8;
+
+    //Block by blcok, write the block number and data to the corresponding F34 data registers
+    writeRMI(SynaF34Reflash_BlockNum, &uData[0], 2);
+    writeRMI(F34_FLASH_DATA2_0, puData, SynaConfigBlockSize);
+    puData += SynaConfigBlockSize;
+
+    // Issue the "Write Configuration Block" command
+    uData[0] = 0x06;
+    writeRMI(SynaF34_FlashControl, &uData[0], 1);
+    SynaWaitATTN();
+//    printf("Func34: SynaProgramConfiguration() -> blockNum:%d.\r\n",blockNum);
+    printf(".");
+  }
+}
+
+/* ConfigBlockReflash reflashes the config block only
+*/
+void ConfigBlockReflash(void)
+{
+  unsigned char uData[2];
+
+  printf("Func34: ConfigBlockReflash()...\r\n");
+
+  SynaInitialize();
+
+  SynaReadConfigInfo();
+
+  SynaReadFirmwareInfo();
+
+  SynaEnableFlashing();
+
+  // Check if device is in unlocked state
+  readRMI(F34_FLASH_QUERY2, &uData[0], 1);
+
+  //Device is unlocked
+  if (uData[0] & 0x02)
+  {
+    SynaFinalizeReflash();
+    printf("Func34: Can NOT reflash config block if device is not locked!\r\n");
+    return;
+    // Do not reflash config block if not locked.
+  }
+
+  eraseConfigBlock();
+  SynaconfigImgData = (unsigned char *)ConfigBlockData;
+
+  SynaProgramConfiguration();
+
+  SynaFinalizeReflash();
+}
+
+
+/* SynaFlashFirmwareWrite writes the firmware section of the image block by block
+ */
+void SynaFlashFirmwareWrite(void)
+{
+  unsigned char *puFirmwareData = SynafirmwareImgData;
+  unsigned char uData[2];
+  unsigned short i, blockNum;
+
+  printf("Func34: SynaFlashFirmwareWrite() ...\r\n");
+
+  printf("Func34: SynaFlashFirmwareWrite() -> SynaFirmwareBlockCount:%d.\r\n",SynaFirmwareBlockCount);
+  for (blockNum = 0; blockNum < SynaFirmwareBlockCount; ++blockNum)
+  {
+    //Block by blcok, write the block number and data to the corresponding F34 data registers
+    uData[0] = blockNum & 0xff;
+    uData[1] = (blockNum & 0xff00) >> 8;
+    writeRMI(SynaF34Reflash_BlockNum, &uData[0], 2);
+
+    writeRMI(SynaF34Reflash_BlockData, puFirmwareData, SynaFirmwareBlockSize);
+    puFirmwareData += SynaFirmwareBlockSize;
+
+    // Issue the "Write Firmware Block" command
+    uData[0] = 2;
+    writeRMI(SynaF34_FlashControl, &uData[0], 1);
+//    printf("Func34: SynaFlashFirmwareWrite() -> blockNum:%d.\r\n",blockNum);
+    printf(".");
+
+    SynaWaitATTN();
+  }
+
+}
+
+
+/* SynaProgramFirmware prepares the firmware writing process
+ */
+void SynaProgramFirmware(void)
+{
+  unsigned char uData;
+
+  printf("Func34: SynaProgramFirmware() => Program Firmware Section...\r\n");
+
+  SynaReadBootloadID();
+
+  SynaWriteBootloadID();
+
+  uData = 3;
+  writeRMI(SynaF34_FlashControl, &uData, 1);
+
+  SynaWaitATTN();
+
+  SynaFlashFirmwareWrite();
+}
+
+
+/* CompleteReflash reflashes the entire user image, including the configuration block and firmware
+*/
+void CompleteReflash(void)
+{
+
+  printf("Func34: CompleteReflash() starting...\r\n");
+
+  SynaInitialize();
+
+  SynaReadConfigInfo();
+
+  SynaReadFirmwareInfo();
+
+//	SynaF34_FlashControl = SynaF34DataBase + SynaFirmwareBlockSize + 2;
+
+  SynaEnableFlashing();
+
+  SynaProgramFirmware();
+  SynaProgramConfiguration();
+#if 0
+  if (fimrwareRevisionCheck())
+  {
+    SynaBootloaderLock();
+
+    SynaProgramConfiguration();
+  }
+  else printf("fimrwareRevisionCheck() return FALSE\r\n!!!");
+#endif
+
+  SynaFinalizeReflash();
+}
+
+
+bool fimrwareRevisionCheck(void)
+{
+  char uData[10];
+  u8 i;
+  char buffer[10];
+
+  char revision[10];
+
+  printf("\nFunc34: fimrwareRevisionCheck() starting...\r\n");
+
+//  readRMI((F01_RMI_Query0 + 11), &uData[0], 10);
+  readRMI(F01_RMI_Query11, uData, 10);
+
+  printf("Func34: fimrwareRevisionCheck() uData:%s...\r\n",uData);
+  /*
+    for (i = 0; i < 10; i++)
+    {
+     printf("fimrwareRevisionCheck(): uData[%d]:0x%x\r\n",i,uData[i]);
+      while (uData[i] != 0x00)
+      {
+        revision[i] = (char) (uData[i]);
+  	  printf("fimrwareRevisionCheck(): revision:%s\r\n",revision);
+      }
+    }
+     */
+  printf("fimrwareRevisionCheck(): uData:%s , FW_REVISION:%s\r\n",uData,FW_REVISION);
+
+  if (strcmp(uData, FW_REVISION) == 0) return TRUE;
+  return FALSE;
+
+}
+
+
+/* SynaBootloaderLock locks down the bootloader
+*/
+void SynaBootloaderLock(void)
+{
+  unsigned short lockBlockCount;
+  unsigned char *puFirmwareData = SynalockImgData;
+  unsigned char uData[2];
+  unsigned short i, uBlockNum;
+
+  printf("Func34: SynaBootloaderLock() starting...\r\n");
+  // Check if device is in unlocked state
+  readRMI(F34_FLASH_QUERY2, &uData[0], 1);
+
+  //Device is unlocked
+  if (uData[0] & 0x02)
+  {
+    printf("SynaBootloaderLock() => Device unlocked. Lock it first...\r\n");
+    // Different bootloader version has different block count for the lockdown data
+    // Need to check the bootloader version from the image file being reflashed
+    printf("SynaBootloaderLock() => SynafirmwareImgVersion:%d.\r\n",SynafirmwareImgVersion);
+
+    switch (SynafirmwareImgVersion)
+    {
+      case 2:
+        lockBlockCount = 3;
+        break;
+      case 4:
+        lockBlockCount = 4;
+        break;
+      case 5:
+        lockBlockCount = 5;
+        break;
+      default:
+        lockBlockCount = 0;
+        break;
+    }
+
+    printf("SynaBootloaderLock() => lockBlockCount:%d.\r\n",lockBlockCount);
+
+    // Write the lockdown info block by block
+    // This reference code of lockdown process does not check for bootloader version
+    // currently programmed on the ASIC against the bootloader version of the image to
+    // be reflashed. Such case should not happen in practice. Reflashing cross different
+    // bootloader versions is not supported.
+    for (uBlockNum = 0; uBlockNum < lockBlockCount; ++uBlockNum)
+    {
+      uData[0] = uBlockNum & 0xff;
+      uData[1] = (uBlockNum & 0xff00) >> 8;
+
+      /* Write Block Number */
+      readRMI(SynaF34Reflash_BlockNum, &uData[0], 2);
+
+      /* Write Data Block */
+      writeRMI(SynaF34Reflash_BlockData, puFirmwareData, SynaFirmwareBlockSize);
+
+      /* Move to next data block */
+      puFirmwareData += SynaFirmwareBlockSize;
+
+      /* Issue Write Lockdown Block command */
+      uData[0] = 4;
+      writeRMI(SynaF34_FlashControl, &uData[0], 1);
+      printf(".");
+
+      /* Wait ATTN until device is done writing the block and is ready for the next. */
+      SynaWaitForATTN();
+
+    }
+    printf("Device locking done.\r\n");
+
+    // Enable reflash again to finish the lockdown process.
+    // Since this lockdown process is part of the reflash process, we are enabling
+    // reflash instead, rather than resetting the device to finish the unlock procedure.
+//    SynaEnableFlashing();
+    RMI_Reset();
+    Clean_RMI_Reset();  
+  }
+  else printf("Device already locked.\n");
+}
+// CRC_Calculate illustates how to calculate a checksum from the config block data.
+// With DS4, the config block checksum is calculated and applies towards the end of
+// the config block data automatically
+// Variable data to this function represents the data only portion of the config block
+// Varaible len represents the length of the variable data.
+unsigned long CRC_Calculate(unsigned short *data, unsigned short len)
+{
+  u8 i;
+  unsigned long Data_CRC = 0xffffffff;
+  unsigned long sum1 = (unsigned long)(Data_CRC & 0xFFFF);
+  unsigned long sum2 = (unsigned long)(Data_CRC >> 16);
+
+  for (i = 0; i < len; i++)
+  {
+    unsigned long temp = data[i];
+    sum1 += temp;
+    sum2 += sum1;
+    sum1 = (unsigned long)((sum1 & 0xffff) + (sum1 >> 16));
+    sum2 = (unsigned long)((sum2 & 0xffff) + (sum2 >> 16));
+  }
+
+  Data_CRC = (unsigned long)(sum2 << 16 | sum1);
+  return Data_CRC; //Bootloader_incrementalCrc;
+}
+

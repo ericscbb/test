@@ -1,0 +1,343 @@
+/*
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Copyright (c) 2011 Synaptics, Inc.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of
+   this software and associated documentation files (the "Software"), to deal in
+   the Software without restriction, including without limitation the rights to use,
+   copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+   Software, and to permit persons to whom the Software is furnished to do so,
+   subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+#include "rmi.h"
+#include "math.h"
+#include "usually.h"
+#include "LCD_Drive.h"
+
+/**************************************************************
+ *** BE SURE TO ADD YOUR NEW COMMAND TO CommandProcessor.c, ***
+ **************************************************************/
+
+// nOpts defines the number of options for this command
+#define nOpts  6
+#define GEST   0x01
+#define ALL    0x02
+#define GT2    3
+#define runAvgCnt    10
+#define PORTRAIT     1
+#define LANDSCAPE    2
+#define FLIP_X       4
+#define FLIP_Y       8
+
+//static void printGest(u8 *);
+u8 tmpbuf[1];
+u8 tmpbufs[10];
+u8 fingerbufs[50];
+uint8_t ReportMode = 0;
+extern u8 NumOfFingers_Reporting;
+extern u8 I2C_Address;
+extern u8 F01_RMI_Data0;
+extern u8 F11_2D_Data28;
+extern u8 F11_2D_Data35_0;
+
+u16 Max_X_Pos=0;
+u16 Max_Y_Pos=0;
+extern u8 F11_2D_Ctrl0,F11_2D_Data0_0,F11_2D_Data0_1,F11_2D_Data0_2,F11_2D_Data1_0;
+extern bool HasGestures;
+extern u8 nfsg;
+
+//enum finger_color {RED=1, GBLUE, GRAYBLUE, GREEN, BLUE, BROWN, LBBLUE, BRRED, LIGHTBLUE, LGRAYBLUE };
+u16 fig_color[10]= {RED, GBLUE, GRAYBLUE, GREEN, BLUE, BROWN, LBBLUE, BRRED, LIGHTBLUE, LGRAYBLUE};
+
+void CheckReportMode(void)
+{
+//	  u8 ReportingMode;
+  printf("Reporting Mode: ");
+
+  ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+
+  switch(ReportMode)
+  {
+    case 0:
+      printf("Finger Present (continuous)\r\n");
+      break;
+    case 1:
+      printf("Reduced\r\n");
+      break;
+    case 2:
+      printf("State Change\r\n");
+      break;
+    case 5:
+      printf("Z Clip\r\n");
+      break;
+    case 7:
+      printf("Continuous (spew)\r\n");
+      break;
+  }
+}
+
+void RMI_Reset(void)
+{
+  extern u8 F01_RMI_Cmd0;
+
+//Change to default page
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,0);
+
+  printf("RMI: Send Reset...,F01_RMI_Cmd0:0x%x\r\n",F01_RMI_Cmd0);
+  I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+  Delay_Ms(200);
+}
+
+void Clean_RMI_Reset(void)
+{
+  extern u8 F01_RMI_Ctrl0;
+
+//Change to default page
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,0);
+
+  printf("RMI: Clean Reset Status...,F01_RMI_Ctrl0:0x%x\r\n",F01_RMI_Ctrl0);
+  I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+
+}
+
+void Get_RMI_MaxPos(void)
+{
+//    printf("F11_2D_Ctrl6: 0x%x, F11_2D_Ctrl7: 0x%x,, F11_2D_Ctrl8: 0x%x,F11_2D_Ctrl9: 0x%x.\r\n",F11_2D_Ctrl6,F11_2D_Ctrl7,F11_2D_Ctrl8,F11_2D_Ctrl9);
+
+  Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+  Max_Y_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl9) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl8);
+
+  printf("Max X Pos:%u. Max Y Pos:%u.\r\n",Max_X_Pos,Max_Y_Pos);
+}
+
+/* read_func11()
+ * Return 0 on success.
+ */
+void read_func11(void)
+{
+
+  u8 fingerstate1=0,fingerstate2=0,fingerstate3=0;
+  u8 finger_num=0;
+  u8 i;
+
+  finger_info_structure fg[10];
+  extern u8 F11_2D_Data35_0,b_Has8bitW;
+  u8 upperW[8];
+
+//	printf("func11 dbg: nfsg=%d\r\n",nfsg);
+
+  if(nfsg ==1)
+  {
+    fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_0:0x%x, fingerstate1:0x%x.\r\n",I2C_Address,F11_2D_Data0_0,fingerstate1);
+
+    if(fingerstate1 && 0x01)  finger_num +=1;
+    fingerstate1 >>= 2;
+
+  }
+  else if(nfsg ==2)
+  {
+    fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_0:0x%x, fingerstate1:0x%x.\r\n",I2C_Address,F11_2D_Data0_0,fingerstate1);
+
+
+    for(i=0; i<4; i++)
+    {
+      if(fingerstate1 && 0x01)  finger_num +=1;
+      fingerstate1 >>= 2;
+    }
+
+
+    fingerstate2 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_1);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_1:0x%x, fingerstate2:0x%x.\r\n",I2C_Address,F11_2D_Data0_1,fingerstate2);
+
+    for(i=0; i<4; i++)
+    {
+      if(fingerstate2 && 0x01)  finger_num +=1;
+      fingerstate2 >>= 2;
+    }
+
+  }
+  else
+  {
+    fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_0:0x%x, fingerstate1:0x%x.\r\n",I2C_Address,F11_2D_Data0_0,fingerstate1);
+
+
+    for(i=0; i<4; i++)
+    {
+      if(fingerstate1 && 0x01)  finger_num +=1;
+      fingerstate1 >>= 2;
+    }
+
+
+    fingerstate2 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_1);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_1:0x%x, fingerstate2:0x%x.\r\n",I2C_Address,F11_2D_Data0_1,fingerstate2);
+
+    for(i=0; i<4; i++)
+    {
+      if(fingerstate2 && 0x01)  finger_num +=1;
+      fingerstate2 >>= 2;
+    }
+
+
+    fingerstate3 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_2);
+//	printf("CheckFingerState: I2C address:0x%x, F11_2D_Data0_2:0x%x, fingerstate3:0x%x.\r\n",I2C_Address,F11_2D_Data0_2,fingerstate3);
+
+    for(i=0; i<4; i++)
+    {
+      if(fingerstate3 && 0x01)  finger_num +=1;
+      fingerstate3 >>= 2;
+    }
+  }
+
+  printf("%d finger(s) present.\r\n",finger_num);
+
+  readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+// 	printf("F11_2D_Data1_0:0x%x, finger_num * Finger_Reg_Size= %d\r\n",F11_2D_Data1_0,finger_num * Finger_Reg_Size);
+// 	printf("fingerbufs[0]:0x%x, fingerbufs[1]:0x%x, fingerbufs[2]:0x%x, fingerbufs[3]:0x%x,fingerbufs[4]:0x%x.\r\n",fingerbufs[0],fingerbufs[1],fingerbufs[2],fingerbufs[3],fingerbufs[4]);
+
+  if(finger_num ==0)
+  {
+    printf("No finger.\r\n");
+    LCD_FillRectangle(3,63,187,307,BLACK);
+//   RMI_LCDDrawRectangle(0,60,200,300,WHITE);
+  }
+  else
+  {
+    for(i=0; i<finger_num; i++)
+    {
+      fg[i].pos_x = (u16)(fingerbufs[i*Finger_Reg_Size+0] << 4)+ (fingerbufs[i*Finger_Reg_Size+2] & 0x0F);
+
+      fg[i].pos_y = (u16)(fingerbufs[i*Finger_Reg_Size+1] << 4)+ ((fingerbufs[i*Finger_Reg_Size+2] & 0xF0) >> 4);
+
+      if(b_Has8bitW)
+      {
+        readRMI(F11_2D_Data35_0,upperW, finger_num);
+        fg[i].pos_wx =  fingerbufs[i*Finger_Reg_Size+3] & 0x0F + (upperW[i] & 0x0F << 4);
+        fg[i].pos_wy =  ((fingerbufs[i*Finger_Reg_Size+3] & 0xF0) >>4) + (upperW[i] & 0xF0);
+      }
+      else
+      {
+        fg[i].pos_wx =  fingerbufs[i*Finger_Reg_Size+3] & 0x0F;
+        fg[i].pos_wy =  (fingerbufs[i*Finger_Reg_Size+3] & 0xF0) >>4;
+      }
+      fg[i].pos_z = fingerbufs[i*Finger_Reg_Size+4];
+
+      printf("		Fig_%d[x,y,z,wx,wy] = <%u,%u,%d,%d,%d>\r\n",i, fg[i].pos_x,fg[i].pos_y,fg[i].pos_z,fg[i].pos_wx,fg[i].pos_wy);
+
+     RMI_DispLCDCircle(convPosX2LCD(fg[i].pos_x),convPosY2LCD(fg[i].pos_y),fg[i].pos_z/60+1,fig_color[i]);
+//      RMI_LCDDrawColorPoint(convPosX2LCD(fg[i].pos_x),convPosY2LCD(fg[i].pos_y),fg[i].pos_z/50+1,fig_color[i]);
+    }
+    LCD_ShowNum( 80,44,fg[0].pos_x,4);
+    LCD_ShowNum(120,44,fg[0].pos_y,4);
+    LCD_ShowNum(160,44,fg[0].pos_z,3);	
+  }
+
+  if(HasGestures)  printf("Critial error ::: DS4 v3??\r\n");
+
+//	printf("F11_2D_Data28: 0x%x\r\n",F11_2D_Data28);
+  readRMI(F11_2D_Data28, tmpbufs, 4);
+
+//	printf("F11_2D_Data35_0: 0x%x\r\n",F11_2D_Data35_0);
+  readRMI(F11_2D_Data35_0, tmpbufs, 10);
+
+//  readRMI(F01_RMI_Data1, tmpbuf, 1);    // Read reg to clear attn
+// 	printf("F01_RMI_Data1:0x%x,tmpbuf[0]= 0x%x\r\n",F01_RMI_Data0,tmpbuf[0]);
+
+
+}
+
+uint8_t convPosX2LCD(uint16_t fig_x)
+{
+  u8 tmp;
+
+  tmp = (u32)(fig_x*180)/Max_X_Pos;
+//  printf("MAX_X:%u,LCD_X:%d\r\n",Max_X_Pos,(fig_x*200)/Max_X_Pos);
+//  return (fig_x*200)/Max_X_Pos;
+  if ((tmp < 0 ) || (tmp >180)) printf("F01_RMI: conver X critial error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n");
+  else return (tmp + 5);
+}
+
+uint16_t convPosY2LCD(uint16_t fig_y)
+{
+  u16 tmp;
+// printf("MAX_Y:%u,LCD_Y:%u\r\n",Max_Y_Pos,(60+ (fig_y*240)/Max_Y_Pos));
+
+  tmp = 60+ (u32)(fig_y*240)/Max_Y_Pos;
+  if ((tmp < 60 ) || (tmp >300)) printf("F01_RMI: conver Y critial error!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n");
+  else return (tmp+5);
+//  return (60+ (fig_y*240)/Max_Y_Pos);
+}
+/*
+static void printGest(u8 *gest)
+{
+   u8 spcs = 21;
+
+   if(*gest & 0x01) {
+      printf("SingleTap ");
+   }
+   if(*gest & 0x02) {
+      printf("Tap&Hold ");
+   }
+   if(*gest & 0x04) {
+      printf("DoubleTap ");
+   }
+   if(*gest & 0x08) {
+      printf("EarlyTap ");
+   }
+   if(*gest & 0x10) {
+      printf("Flick ");
+   }
+   if(*gest & 0x20) {
+      printf("Press ");
+   }
+   if(*gest & 0x40) {
+      printf("Pinch ");
+   }
+   if(*gest & 0x80) {
+      printf("");
+   }
+   gest++;
+   if(*gest & 0x01) {
+      printf("PalmReject ");
+      spcs -= strlen("PalmReject ");
+   }
+   if(*gest & 0x02) {
+      printf("Rotate ");
+   }
+   if(*gest & 0x04) {
+      printf("");
+   }
+   if(*gest & 0x08) {
+      printf("");
+   }
+   if(*gest & 0x10) {
+      printf("");
+   }
+
+   if(spcs > 25) {
+      return;
+   }
+
+   while(spcs--) {
+      printf(" ");
+   }
+
+   return;
+}
+*/

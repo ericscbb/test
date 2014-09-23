@@ -1,0 +1,53 @@
+*** Creating Trace Output File '.\OBJ\s3xxx.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\obj\core_cm3.o"'
+### List of Objects: adding '".\obj\system_stm32f10x.o"'
+### List of Objects: adding '".\obj\startup_stm32f10x_hd.o"'
+### List of Objects: adding '".\obj\main.o"'
+### List of Objects: adding '".\obj\usart.o"'
+### List of Objects: adding '".\obj\stm32f10x_it.o"'
+### List of Objects: adding '".\obj\stm32f10x_exti.o"'
+### List of Objects: adding '".\obj\stm32f10x_tim.o"'
+### List of Objects: adding '".\obj\stm32f10x_rtc.o"'
+### List of Objects: adding '".\obj\lcd_drive.o"'
+### List of Objects: adding '".\obj\hz16.o"'
+### List of Objects: adding '".\obj\bmp2.o"'
+### List of Objects: adding '".\obj\sdcard.o"'
+### List of Objects: adding '".\obj\ff.o"'
+### List of Objects: adding '".\obj\diskio.o"'
+### List of Objects: adding '".\obj\ccsbcs.o"'
+### List of Objects: adding '".\obj\misc.o"'
+### List of Objects: adding '".\obj\stm32f10x_flash.o"'
+### List of Objects: adding '".\obj\stm32f10x_gpio.o"'
+### List of Objects: adding '".\obj\stm32f10x_rcc.o"'
+### List of Objects: adding '".\obj\stm32f10x_fsmc.o"'
+### List of Objects: adding '".\obj\stm32f10x_usart.o"'
+### List of Objects: adding '".\obj\stm32f10x_sdio.o"'
+### List of Objects: adding '".\obj\stm32f10x_dma.o"'
+### List of Objects: adding '".\obj\stm32f10x_bkp.o"'
+### List of Objects: adding '".\obj\stm32f10x_pwr.o"'
+### List of Objects: adding '".\obj\iic.o"'
+### List of Objects: adding '".\obj\pdt_scan.o"'
+### List of Objects: adding '".\obj\rmi_func11.o"'
+### List of Objects: adding '".\obj\rmi_func54.o"'
+### List of Objects: adding '".\obj\rmi_func1a.o"'
+### List of Objects: adding '".\obj\rmi_func34.o"'
+### List of Objects: adding '".\obj\24lc02.o"'
+### List of Objects: adding '".\obj\rtc.o"'
+### List of Objects: adding '".\obj\readme.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\obj\core_cm3.o" ".\obj\system_stm32f10x.o" ".\obj\startup_stm32f10x_hd.o" ".\obj\main.o" ".\obj\usart.o" ".\obj\stm32f10x_it.o" ".\obj\stm32f10x_exti.o" ".\obj\stm32f10x_tim.o" ".\obj\stm32f10x_rtc.o" ".\obj\lcd_drive.o" ".\obj\hz16.o" ".\obj\bmp2.o" ".\obj\sdcard.o" ".\obj\ff.o" ".\obj\diskio.o" ".\obj\ccsbcs.o" ".\obj\misc.o" ".\obj\stm32f10x_flash.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_fsmc.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_sdio.o" ".\obj\stm32f10x_dma.o" ".\obj\stm32f10x_bkp.o" ".\obj\stm32f10x_pwr.o" ".\obj\iic.o" ".\obj\pdt_scan.o" ".\obj\rmi_func11.o" ".\obj\rmi_func54.o" ".\obj\rmi_func1a.o" ".\obj\rmi_func34.o" ".\obj\24lc02.o" ".\obj\rtc.o" ".\obj\readme.o" --strict --scatter ".\OBJ\s3xxx.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\List\s3xxx.map" -o ".\OBJ\s3xxx.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\OBJ\s3xxx.axf'
+### ADS-LD Command File: '.\OBJ\s3xxx.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\OBJ\s3xxx.lnp', Handle=0x00000364
+### Writing '.lnp' file
+### ADS-LD Command file '.\OBJ\s3xxx.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

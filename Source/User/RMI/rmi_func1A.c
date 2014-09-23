@@ -1,0 +1,174 @@
+/*
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Copyright (c) 2011 Synaptics, Inc.
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy of
+   this software and associated documentation files (the "Software"), to deal in
+   the Software without restriction, including without limitation the rights to use,
+   copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+   Software, and to permit persons to whom the Software is furnished to do so,
+   subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+#include "rmi.h"
+#include "math.h"
+#include "usually.h"
+
+extern u8 I2C_Address;
+extern u8 F1A_0D_DATA0;
+
+u16 B0[5]= {200,60,220,80,RED};
+u16 B1[5]= {200,100,220,120,YELLOW};
+u16 B2[5]= {200,140,220,160,GREEN};
+u16 B3[5]= {200,180,220,200,BLUE};
+
+
+/**************************************************************
+ *** BE SURE TO ADD YOUR NEW COMMAND TO CommandProcessor.c, ***
+ **************************************************************/
+//-----------------------
+// F1A Button report mode
+//-----------------------
+void Ctrl_F1A_RM(u8 btnmode)
+{
+  u8 btn_rm;
+  extern u8 F1A_0D_CTRL0;
+//Change to page 2
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,2);
+
+  btn_rm = I2C_RMI_BufferRead(I2C_Address,F1A_0D_CTRL0) & 0x03;
+  switch(btn_rm)
+  {
+    case 0x00:
+      printf("Func1A Ctrl: Button reporting mode: Unrestricted buttons.\r\n");
+      break;
+    case 0x01:
+      printf("Func1A Ctrl: Button reporting mode: Reserved.\r\n");
+      break;
+    case 0x02:
+      printf("Func1A Ctrl: Button reporting mode: Strongest button only.\r\n");
+      break;
+    case 0x03:
+      printf("Func1A Ctrl: Button reporting mode: First button only.\r\n");
+      break;
+  }
+
+  I2C_RMI_BufferWrite(I2C_Address,F1A_0D_CTRL0,(btnmode & 0x03));
+
+  switch(btn_rm)
+  {
+    case 0x00:
+      printf("Func1A Ctrl: Button reporting mode: Unrestricted buttons.\r\n");
+      break;
+    case  0x01:
+      printf("Func1A Ctrl: Button reporting mode: Reserved.\r\n");
+      break;
+    case 0x02:
+      printf("Func1A Ctrl: Button reporting mode: Strongest button only.\r\n");
+      break;
+    case 0x03:
+      printf("Func1A Ctrl: Button reporting mode: First button only.\r\n");
+      break;
+  }
+}
+//-----------------------
+// F1A Button filter mode
+//-----------------------
+void Ctrl_F1A_FilterMode(u8 btnfiltermode)
+{
+  u8 btn_fm;
+//Change to page 2
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,2);
+
+  btn_fm = I2C_RMI_BufferRead(I2C_Address,F1A_0D_CTRL0) & 0x0C;
+  switch(btn_fm)
+  {
+    case 0x00:
+      printf("Func1A Ctrl: Button Filter mode: Standard filter.\r\n");
+      break;
+    case  0x01:
+      printf("Func1A Ctrl: Button Debounce filter.\r\n");
+      break;
+    case 0x02:
+      printf("Func1A Ctrl: Button Filter mode: Reserved.\r\n");
+      break;
+    case  0x03:
+      printf("Func1A Ctrl: Button Filter mode: Reserved.\r\n");
+      break;
+  }
+
+  I2C_RMI_BufferWrite(I2C_Address,F1A_0D_CTRL0,(btnfiltermode & 0x0C));
+
+  switch(btn_fm)
+  {
+    case 0x00:
+      printf("Func1A Ctrl: Button Filter mode: Standard filter.\r\n");
+      break;
+    case 0x01:
+      printf("Func1A Ctrl: Button Debounce filter.\r\n");
+      break;
+    case 0x02:
+      printf("Func1A Ctrl: Button Filter mode: Reserved.\r\n");
+      break;
+    case 0x03:
+      printf("Func1A Ctrl: Button Filter mode: Reserved.\r\n");
+      break;
+  }
+}
+
+/*
+ * read_func1A()
+ */
+void read_func1A(void)
+{
+  u8 btn_data;
+//Change to page 2
+  I2C_RMI_BufferWrite(I2C_Address,Page_Select_register,2);
+
+  btn_data = I2C_RMI_BufferRead(I2C_Address,F1A_0D_DATA0) & 0x0F;
+
+  if(btn_data == 0)
+  {
+    printf("Func1A Data: NO button is pressed.\r\n");
+    LCD_FulfillArea(B0[0]+2,B0[1]+2,B0[2]-1,B0[3]-1,BLACK);
+    LCD_FulfillArea(B1[0]+2,B1[1]+2,B1[2]-1,B1[3]-1,BLACK);
+    LCD_FulfillArea(B2[0]+2,B2[1]+2,B2[2]-1,B2[3]-1,BLACK);
+    LCD_FulfillArea(B3[0]+2,B3[1]+2,B3[2]-1,B3[3]-1,BLACK);
+
+  }
+
+  if(btn_data & 0x01)
+  {
+    printf("Func1A Data: Button 0 is pressed.\r\n");
+    LCD_FulfillArea(B0[0]+2,B0[1]+2,B0[2]-1,B0[3]-1,B0[4]);
+  }
+  if(btn_data & 0x02)
+  {
+    printf("Func1A Data: Button 1 is pressed.\r\n");
+    LCD_FulfillArea(B1[0]+2,B1[1]+2,B1[2]-1,B1[3]-1,B1[4]);
+  }
+  if(btn_data & 0x04)
+  {
+    printf("Func1A Data: Button 2 is pressed.\r\n");
+    LCD_FulfillArea(B2[0]+2,B2[1]+2,B2[2]-1,B2[3]-1,B2[4]);
+  }
+  if(btn_data & 0x08)
+  {
+    printf("Func1A Data: Button 3 is pressed.\r\n");
+    LCD_FulfillArea(B3[0]+2,B3[1]+2,B3[2]-1,B3[3]-1,B3[4]);
+  }
+}
+

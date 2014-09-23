@@ -1,0 +1,118 @@
+/*
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   Copyright (c) 2011 Synaptics, Inc.
+   
+   Permission is hereby granted, free of charge, to any person obtaining a copy of 
+   this software and associated documentation files (the "Software"), to deal in 
+   the Software without restriction, including without limitation the rights to use, 
+   copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+   Software, and to permit persons to whom the Software is furnished to do so, 
+   subject to the following conditions:
+   
+   The above copyright notice and this permission notice shall be included in all 
+   copies or substantial portions of the Software.
+   
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+   SOFTWARE.
+
+  
+   +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
+// SynaFirmwareImage.h contains the data for both the entire image and the config block
+#include "rmi.h"
+#include "math.h"
+#include "usually.h"
+#include "LCD_Drive.h"
+
+/* Variables for F34 functionality */
+/*
+unsigned short SynaF34DataBase;
+unsigned short SynaF34QueryBase;
+unsigned short SynaF01DataBase;
+unsigned short SynaF01CommandBase;
+
+unsigned short SynaF34Reflash_BlockNum;
+unsigned short SynaF34Reflash_BlockData;
+unsigned short SynaF34ReflashQuery_BootID;
+unsigned short SynaF34ReflashQuery_FlashPropertyQuery;
+unsigned short SynaF34ReflashQuery_FirmwareBlockSize;
+unsigned short SynaF34ReflashQuery_FirmwareBlockCount;
+unsigned short SynaF34ReflashQuery_ConfigBlockSize;
+unsigned short SynaF34ReflashQuery_ConfigBlockCount;
+
+
+unsigned long SynaImageSize;
+
+unsigned short SynaConfigBlockSize;
+unsigned short SynaConfigBlockCount;
+unsigned long SynaConfigImageSize;
+
+
+
+unsigned short SynaF34_FlashControl;
+
+unsigned char *SynafirmwareImgData;
+unsigned char *SynaconfigImgData;
+unsigned char *SynalockImgData;
+unsigned int SynafirmwareImgVersion;
+
+unsigned char ConfigBlock[];
+*/
+
+unsigned short SynaBootloadID;
+unsigned short SynaFirmwareBlockSize;
+unsigned short SynaFirmwareBlockCount;
+unsigned short SynaConfigBlockSize;
+unsigned short SynaConfigBlockCount;
+unsigned long SynaConfigImageSize;
+
+/* End: Variables for F34 functionality */
+
+/* SynaReadBootloadID reads the F34 query registers and retrieves the bootloader ID of the firmware
+ */
+void SynaReadBootloadID(void)
+{
+	unsigned char uData[2];
+
+	readRMI(F34_FLASH_QUERY0, &uData[0], 2);
+	SynaBootloadID = uData[0] + uData[1] * 0x100;
+	printf("F34: Bootloader ID:%s\r\n",uData);
+}
+
+/* SynaWriteBootloadID writes the bootloader ID to the F34 data register to unlock the reflash process
+ */
+void SynaWriteBootloadID(void)
+{
+	unsigned char uData[2];
+
+	uData[0] = SynaBootloadID % 0x100;
+	uData[1] = SynaBootloadID / 0x100;
+
+	writeRMI(F34_FLASH_DATA00, &uData[0], 2);
+}
+
+/* SynaReadConfigInfo reads the F34 query registers and retrieves the block size and count
+ * of the configuration section of the image to be reflashed 
+ */
+void SynaReadConfigInfo(void)
+{
+	unsigned char uData[2];
+
+  printf("F34:Read Config Info.\r\n");
+
+	readRMI(F34_FLASH_QUERY3, &uData[0], 2);
+	SynaConfigBlockSize = uData[0] | (uData[1] << 8);
+	printf("F34: SynaConfigBlockSize:%d \r\n",SynaConfigBlockSize);
+
+	readRMI(F34_FLASH_QUERY5, &uData[0], 2);
+	SynaConfigBlockCount = uData[0] | (uData[1] << 8);
+	SynaConfigImageSize = SynaConfigBlockCount * SynaConfigBlockSize;
+	printf("F34: SynaConfigBlockCount:%d , SynaConfigImageSize:%d\r\n",SynaConfigBlockCount,SynaConfigImageSize);	
+	
+}

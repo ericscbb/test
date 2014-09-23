@@ -1,0 +1,1233 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\code_tmp\CP_S3xxx_v2\s3xxx.uvproj
+Project File Date:  12/29/2011
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling main.c...
+.\Source\User\RMI\rmi.h(288): warning:  #47-D: incompatible redefinition of macro "F54_ANALOG_DATA3" (declared at line 287)
+.\Source\User\RMI\rmi.h:   #define F54_ANALOG_DATA3                             F54_Data_Buffer
+.\Source\User\RMI\rmi.h:           ^
+.\Source\User\RMI\rmi.h: Source\User\Main\main.c: 1 warning, 0 errors
+compiling pdt_scan.c...
+Source\User\RMI\rmi.h(288): warning:  #47-D: incompatible redefinition of macro "F54_ANALOG_DATA3" (declared at line 287)
+Source\User\RMI\rmi.h:   #define F54_ANALOG_DATA3                               F54_Data_Buffer
+Source\User\RMI\rmi.h:           ^
+Source\User\RMI\rmi.h: Source\User\RMI\pdt_scan.c: 1 warning, 0 errors
+compiling rmi_func11.c...
+Source\User\RMI\rmi.h(288): warning:  #47-D: incompatible redefinition of macro "F54_ANALOG_DATA3" (declared at line 287)
+Source\User\RMI\rmi.h:   #define F54_ANALOG_DATA3                               F54_Data_Buffer
+Source\User\RMI\rmi.h:           ^
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 10 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi.h(288): warning:  #47-D: incompatible redefinition of macro "F54_ANALOG_DATA3" (declared at line 287)
+Source\User\RMI\rmi.h:   #define F54_ANALOG_DATA3                               F54_Data_Buffer
+Source\User\RMI\rmi.h:           ^
+Source\User\RMI\rmi_func54.c(33): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(33): error:  #20: identifier "F54_Command_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(48): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(48): error:  #20: identifier "F54_Command_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(65): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(65): error:  #20: identifier "F54_Query_Base" is undefined
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:              ^
+Source\User\RMI\rmi_func54.c(72): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(72): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(80): error:  #20: identifier "F54_Data_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(88): error:  #20: identifier "F54_Command_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(95): error:  #20: identifier "F54_Data_Buffer" is undefined
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Data_Buffer, &ImageBuffer[0], length);
+Source\User\RMI\rmi_func54.c:              ^
+Source\User\RMI\rmi_func54.c(101): error:  #1460: expression must have integral or fixed-point type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (float)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                                                 ^
+Source\User\RMI\rmi_func54.c(101): error:  #31: expression must have integral type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (float)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                               ^
+Source\User\RMI\rmi_func54.c(107): warning:  #223-D: function "printf" declared implicitly
+Source\User\RMI\rmi_func54.c:      printf("\nThe test result:\n");
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(115): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P" /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(116): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:                           else
+Source\User\RMI\rmi_func54.c:                           ^
+Source\User\RMI\rmi_func54.c(117): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F" /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(119): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                           ^
+Source\User\RMI\rmi_func54.c(323): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 13 errors
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(34): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(50): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(68): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(75): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(75): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(83): error:  #20: identifier "F54_Data_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(91): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 32)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(104): error:  #1460: expression must have integral or fixed-point type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (float)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                                                 ^
+Source\User\RMI\rmi_func54.c(104): error:  #31: expression must have integral type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (float)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                               ^
+Source\User\RMI\rmi_func54.c(110): warning:  #223-D: function "printf" declared implicitly
+Source\User\RMI\rmi_func54.c:      printf("\nThe test result:\n");
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(118): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P" /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(119): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:                           else
+Source\User\RMI\rmi_func54.c:                           ^
+Source\User\RMI\rmi_func54.c(120): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F" /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(122): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                           ^
+Source\User\RMI\rmi_func54.c(326): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 8 errors
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(61): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F54_Query_Base,F01_RMI_Ctrl1,F54_Data_Base;
+Source\User\RMI\rmi_func54.c:                               ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(84): error:  #20: identifier "F54_Data_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(105): error:  #1460: expression must have integral or fixed-point type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (u16)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                                               ^
+Source\User\RMI\rmi_func54.c(105): error:  #31: expression must have integral type
+Source\User\RMI\rmi_func54.c:                    ImageArray[i][j] = (u16)(ImageBuffer[k] | (ImageBuffer[k+1] << 8));
+Source\User\RMI\rmi_func54.c:                                             ^
+Source\User\RMI\rmi_func54.c(119): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P"; /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(121): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F"; /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(327): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 6 errors
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(61): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F54_Query_Base,F01_RMI_Ctrl1,F54_Data_Base;
+Source\User\RMI\rmi_func54.c:                               ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(84): error:  #20: identifier "F54_Data_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(119): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P"; /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(121): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F"; /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(123): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c(327): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 4 errors
+Target not created
+Build target 'Target 1'
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling usart.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_rtc.c...
+compiling LCD_Drive.c...
+compiling hz16.c...
+compiling bmp2.c...
+compiling sdcard.c...
+compiling ff.c...
+compiling diskio.c...
+compiling ccsbcs.c...
+compiling misc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_pwr.c...
+compiling iic.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(61): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F54_Query_Base,F01_RMI_Ctrl1,F54_Data_Base;
+Source\User\RMI\rmi_func54.c:                               ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(84): error:  #20: identifier "F54_Data_Base" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(119): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P"; /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(121): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F"; /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(123): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c(327): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 4 errors
+compiling 24LC02.c...
+compiling rtc.c...
+compiling Readme.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(62): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F01_RMI_Ctrl1;
+Source\User\RMI\rmi_func54.c:                ^
+Source\User\RMI\rmi_func54.c(71): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(78): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(94): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(121): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = "P"; /*Pass*/
+Source\User\RMI\rmi_func54.c:                                                ^
+Source\User\RMI\rmi_func54.c(123): error:  #513: a value of type "char *" cannot be assigned to an entity of type "char"
+Source\User\RMI\rmi_func54.c:                               Result[i][j] = "F"; /*Fail*/
+Source\User\RMI\rmi_func54.c:                                            ^
+Source\User\RMI\rmi_func54.c(125): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c(329): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 3 errors
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(62): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F01_RMI_Ctrl1;
+Source\User\RMI\rmi_func54.c:                ^
+Source\User\RMI\rmi_func54.c(71): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(78): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(94): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(125): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c(329): warning:  #1-D: last line of file ends without a newline
+Source\User\RMI\rmi_func54.c:   #endif
+Source\User\RMI\rmi_func54.c:         ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 7 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(62): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F01_RMI_Ctrl1;
+Source\User\RMI\rmi_func54.c:                ^
+Source\User\RMI\rmi_func54.c(71): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(78): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(94): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(125): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(62): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F01_RMI_Ctrl1;
+Source\User\RMI\rmi_func54.c:                ^
+Source\User\RMI\rmi_func54.c(70): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling usart.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_rtc.c...
+compiling LCD_Drive.c...
+compiling hz16.c...
+compiling bmp2.c...
+compiling sdcard.c...
+compiling ff.c...
+compiling diskio.c...
+compiling ccsbcs.c...
+compiling misc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_pwr.c...
+compiling iic.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(62): error:  #65: expected a ";"
+Source\User\RMI\rmi_func54.c:      extern u8 F01_RMI_Ctrl1;
+Source\User\RMI\rmi_func54.c:                ^
+Source\User\RMI\rmi_func54.c(70): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+compiling 24LC02.c...
+compiling rtc.c...
+compiling Readme.c...
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(123): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling usart.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_rtc.c...
+compiling LCD_Drive.c...
+compiling hz16.c...
+compiling bmp2.c...
+compiling sdcard.c...
+compiling ff.c...
+compiling diskio.c...
+compiling ccsbcs.c...
+compiling misc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_pwr.c...
+compiling iic.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(123): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+compiling 24LC02.c...
+compiling rtc.c...
+compiling Readme.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(76): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(123): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(0x5D, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 0 errors
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling usart.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_rtc.c...
+compiling LCD_Drive.c...
+compiling hz16.c...
+compiling bmp2.c...
+compiling sdcard.c...
+compiling ff.c...
+compiling diskio.c...
+compiling ccsbcs.c...
+compiling misc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_pwr.c...
+compiling iic.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(0x5D, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 0 errors
+compiling 24LC02.c...
+compiling rtc.c...
+compiling Readme.c...
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(69): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(77): error:  #20: identifier "F01_RMI_Ctrl0" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(93): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(124): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling main.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(70): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(78): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(94): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(125): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 0 errors
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling main.c...
+compiling usart.c...
+compiling stm32f10x_it.c...
+compiling stm32f10x_exti.c...
+compiling stm32f10x_tim.c...
+compiling stm32f10x_rtc.c...
+compiling LCD_Drive.c...
+compiling hz16.c...
+compiling bmp2.c...
+compiling sdcard.c...
+compiling ff.c...
+compiling diskio.c...
+compiling ccsbcs.c...
+compiling misc.c...
+compiling stm32f10x_flash.c...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_fsmc.c...
+compiling stm32f10x_usart.c...
+compiling stm32f10x_sdio.c...
+compiling stm32f10x_dma.c...
+compiling stm32f10x_bkp.c...
+compiling stm32f10x_pwr.c...
+compiling iic.c...
+compiling pdt_scan.c...
+compiling rmi_func11.c...
+Source\User\RMI\rmi_func11.c(67): warning:  #223-D: function "CP_RMI_Read" declared implicitly
+Source\User\RMI\rmi_func11.c:         ReportMode = CP_RMI_Read(F11_2D_Ctrl0) & 0x07;
+Source\User\RMI\rmi_func11.c:                      ^
+Source\User\RMI\rmi_func11.c(93): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Cmd0,0x1);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferWrite" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c(102): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           I2C_RMI_BufferWrite(I2C_Address,F01_RMI_Ctrl0,(I2C_RMI_BufferRead(I2C_Address,F01_RMI_Ctrl0) | 0x80));
+Source\User\RMI\rmi_func11.c:                                                          ^
+Source\User\RMI\rmi_func11.c(110): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           Max_X_Pos = (u16)((I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl7) & 0x0F)<<8) + I2C_RMI_BufferRead(I2C_Address,F11_2D_Ctrl6);
+Source\User\RMI\rmi_func11.c:                              ^
+Source\User\RMI\rmi_func11.c(131): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(140): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(163): warning:  #223-D: function "I2C_RMI_BufferRead" declared implicitly
+Source\User\RMI\rmi_func11.c:           fingerstate1 = I2C_RMI_BufferRead(I2C_Address,F11_2D_Data0_0);
+Source\User\RMI\rmi_func11.c:                          ^
+Source\User\RMI\rmi_func11.c(196): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func11.c:           readRMI(F11_2D_Data1_0,fingerbufs, finger_num * Finger_Reg_Size);
+Source\User\RMI\rmi_func11.c:           ^
+Source\User\RMI\rmi_func11.c: Source\User\RMI\rmi_func11.c: 9 warnings, 0 errors
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(35): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(51): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(70): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(78): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(94): warning:  #676-D: using out-of-scope declaration of variable "F54_Command_Base" (declared at line 33)
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(125): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 6 warnings, 0 errors
+compiling 24LC02.c...
+compiling rtc.c...
+compiling Readme.c...
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(40): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(56): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(72): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(80): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(127): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 5 warnings, 0 errors
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(40): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(56): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(67): error:  #20: identifier "CFG_F54_TXCOUNT" is undefined
+Source\User\RMI\rmi_func54.c:      u16 ImageArray[CFG_F54_TXCOUNT][CFG_F54_RXCOUNT];
+Source\User\RMI\rmi_func54.c:                     ^
+Source\User\RMI\rmi_func54.c(67): error:  #20: identifier "CFG_F54_RXCOUNT" is undefined
+Source\User\RMI\rmi_func54.c:      u16 ImageArray[CFG_F54_TXCOUNT][CFG_F54_RXCOUNT];
+Source\User\RMI\rmi_func54.c:                                      ^
+Source\User\RMI\rmi_func54.c(72): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(73): error:  #20: identifier "F54_Query1" is undefined
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query1, &numberOfRows, 1);
+Source\User\RMI\rmi_func54.c:              ^
+Source\User\RMI\rmi_func54.c(80): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(80): error:  #20: identifier "F01_RMI_Ctrl1" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(81): error:  #20: identifier "Page_Select_register" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(Page_Select_register, &page, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(91): error:  #20: identifier "F54_Data_LowIndex" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_LowIndex, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(92): error:  #20: identifier "F54_Data_HighIndex" is undefined
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Data_HighIndex, &command, 1);
+Source\User\RMI\rmi_func54.c:               ^
+Source\User\RMI\rmi_func54.c(103): error:  #20: identifier "F54_Data_Buffer" is undefined
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Data_Buffer, &ImageBuffer[0], length);
+Source\User\RMI\rmi_func54.c:              ^
+Source\User\RMI\rmi_func54.c(121): error:  #20: identifier "UpperLimit" is undefined
+Source\User\RMI\rmi_func54.c:                       if ((ImageArray[i][j] < UpperLimit[i][j]) &&
+Source\User\RMI\rmi_func54.c:                                               ^
+Source\User\RMI\rmi_func54.c(122): error:  #20: identifier "LowerLimit" is undefined
+Source\User\RMI\rmi_func54.c:                                   (ImageArray[i][j] > LowerLimit[i][j]))
+Source\User\RMI\rmi_func54.c:                                                       ^
+Source\User\RMI\rmi_func54.c(123): error:  #20: identifier "Result" is undefined
+Source\User\RMI\rmi_func54.c:                                   Result[i][j] = 'P'; /*Pass*/
+Source\User\RMI\rmi_func54.c:                                   ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 4 warnings, 11 errors
+Target not created
+Build target 'Target 1'
+compiling rmi_func54.c...
+Source\User\RMI\rmi_func54.c(40): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(56): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F54_Command_Base, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(72): warning:  #223-D: function "readRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      readRMI(F54_Query_Base, &numberOfColumns, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(80): warning:  #223-D: function "writeRMI" declared implicitly
+Source\User\RMI\rmi_func54.c:      writeRMI(F01_RMI_Ctrl1, &command, 1);
+Source\User\RMI\rmi_func54.c:      ^
+Source\User\RMI\rmi_func54.c(127): warning:  #181-D: argument is incompatible with corresponding format string conversion
+Source\User\RMI\rmi_func54.c:                           printf("%c (%2.1f), ", Result[i][j], ImageArray[i][j]);
+Source\User\RMI\rmi_func54.c:                                                                ^
+Source\User\RMI\rmi_func54.c: Source\User\RMI\rmi_func54.c: 5 warnings, 0 errors
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
+Build target 'Target 1'
+compiling main.c...
+linking...
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol Result multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol UpperLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by pdt_scan.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func11.o and main.o).
+.\OBJ\s3xxx.axf: Error: L6200E: Symbol LowerLimit multiply defined (by rmi_func54.o and main.o).
+.\OBJ\s3xxx.axf: Not enough information to list image symbols.
+.\OBJ\s3xxx.axf: Not enough information to list the image map.
+.\OBJ\s3xxx.axf: Finished: 2 information, 0 warning and 9 error messages.
+Target not created
